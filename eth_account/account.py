@@ -263,7 +263,7 @@ class Account:
             # encrypt(). They correspond to the same-named methods in Account.*
             # but without the private key argument
         """
-        key = self._parsePrivateKey(private_key)
+        key = self._parse_private_key(private_key)
         return LocalAccount(key, self)
 
     @combomethod
@@ -336,7 +336,7 @@ class Account:
             )
         seed = seed_from_mnemonic(mnemonic, passphrase)
         private_key = key_from_seed(seed, account_path)
-        key = self._parsePrivateKey(private_key)
+        key = self._parse_private_key(private_key)
         return LocalAccount(key, self)
 
     @combomethod
@@ -644,7 +644,7 @@ class Account:
         if len(msg_hash_bytes) != 32:
             raise ValueError("The message hash must be exactly 32-bytes")
 
-        key = self._parsePrivateKey(private_key)
+        key = self._parse_private_key(private_key)
 
         (v, r, s, eth_signature_bytes) = sign_message_hash(key, msg_hash_bytes)
         return SignedMessage(
@@ -828,7 +828,7 @@ class Account:
         )
 
     @combomethod
-    def _parsePrivateKey(self, key):
+    def _parse_private_key(self, key):
         """
         Generate a :class:`eth_keys.datatypes.PrivateKey` from the provided key.
 
