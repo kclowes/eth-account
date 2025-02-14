@@ -91,15 +91,17 @@ def is_rpc_structured_authorization(val: Any) -> bool:
     """
     if not is_list_like(val):
         return False
-    for l in val:
-        if not is_list_like(l):
+    for auth in val:
+        if not is_list_like(auth):
             return False
-        if len(l) != 6:
+        if len(auth) != 6:
             return False
-        for item in l:
+        for item in auth:
             if not is_int_or_prefixed_hexstr(item):
+                print("auth[i]: ", auth.index(item))
+                print("item: ", item)
                 return False
-        if not is_address(l[1]):
+        if not is_address(auth[1]):
             return False
 
     return True

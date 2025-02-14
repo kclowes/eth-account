@@ -83,7 +83,7 @@ TYPED_TRANSACTION_FORMATTERS = merge(
                     # account
                     apply_one_of_formatters(
                         (
-                            (is_string, hexstr_if_str(to_bytes)),
+                            # (is_string, hexstr_if_str(to_bytes)),
                             (is_bytes, identity),
                         )
                     ),
