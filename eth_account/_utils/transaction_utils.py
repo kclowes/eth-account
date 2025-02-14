@@ -41,7 +41,10 @@ def set_transaction_type_if_needed(
     transaction_dict: TransactionDictType,
 ) -> TransactionDictType:
     if "type" not in transaction_dict:
-        if all(
+        if "authorizations" in transaction_dict:
+            # set code txn - type 4
+            transaction_dict = assoc(transaction_dict, "type", "0x4")
+        elif all(
             type_1_arg in transaction_dict for type_1_arg in ("gasPrice", "accessList")
         ):
             # access list txn - type 1

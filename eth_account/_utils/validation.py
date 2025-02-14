@@ -84,6 +84,27 @@ def is_rpc_structured_access_list(val: Any) -> bool:
     return True
 
 
+def is_rpc_structured_authorization(val: Any) -> bool:
+    """
+    Returns true if 'val' is a valid JSON-RPC structured access list.
+    authorizations = [(chain_id, address, nonce, y_parity, r, s), ...]
+    """
+    if not is_list_like(val):
+        return False
+    for l in val:
+        if not is_list_like(l):
+            return False
+        if len(l) != 6:
+            return False
+        for item in l:
+            if not is_int_or_prefixed_hexstr(item):
+                return False
+        if not is_address(l[1]):
+            return False
+
+    return True
+
+
 def is_rlp_structured_access_list(val: Any) -> bool:
     """Returns true if 'val' is a valid rlp-structured access list."""
     if not is_list_like(val):

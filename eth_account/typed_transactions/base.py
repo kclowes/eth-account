@@ -31,6 +31,7 @@ from eth_utils import (
 from eth_utils.curried import (
     apply_formatter_to_array,
     apply_formatters_to_dict,
+    apply_formatters_to_sequence,
     apply_one_of_formatters,
     hexstr_if_str,
 )
@@ -74,6 +75,31 @@ TYPED_TRANSACTION_FORMATTERS = merge(
         "maxFeePerGas": hexstr_if_str(to_int),
         "maxFeePerBlobGas": hexstr_if_str(to_int),
         "blobVersionedHashes": apply_formatter_to_array(hexstr_if_str(to_bytes)),
+        "authorizations": apply_formatter_to_array(
+            apply_formatters_to_sequence(
+                [
+                    # chain_id
+                    hexstr_if_str(to_int),
+                    # account
+                    apply_one_of_formatters(
+                        (
+                            (is_string, hexstr_if_str(to_bytes)),
+                            (is_bytes, identity),
+                        )
+                    ),
+                    # # nonce
+                    hexstr_if_str(to_int),
+                    # # yparity
+                    hexstr_if_str(to_int),
+                    # r
+                    # identity,
+                    hexstr_if_str(to_int),
+                    # s
+                    # identity,
+                    hexstr_if_str(to_int),
+                ]
+            ),
+        ),
     },
 )
 

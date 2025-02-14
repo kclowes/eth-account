@@ -8,6 +8,7 @@ from eth_account.typed_transactions import (
     AccessListTransaction,
     BlobTransaction,
     DynamicFeeTransaction,
+    SetCodeTransaction,
     TypedTransaction,
 )
 
@@ -339,6 +340,43 @@ TEST_CASES = [
             "s": "0x3040e5f117d33a7873d8bfa8fad8bf5d1163db2ce4e3de5ea414a45e199b5b2d",
         },
     },
+    {
+        "expected_type": SetCodeTransaction,
+        "expected_hash": "0x1a0626e6220ff45d31472a731171ec106f7b8cd5cfe26d34cbcdab0bd2ec18ef",  # noqa: E501
+        "expected_raw_transaction": "0x04f9010f820539220285012a05f200830186a09409616c3d61b3331fc4109a9e41a8bdb7d9776609865af3107a400086616263646566f838f7940000000000000000000000000000000000000001e1a00100000000000000000000000000000000000000000000000000000000000000f85ef85c8205399409616c3d61b3331fc4109a9e41a8bdb7d97766098001a08289e85fa00f8f7f78a53cf147a87b2a7f0d27e64d7571f9d06a802e365c3430a017dc77eae36c88937db4a5179f57edc6119701652f3f1c6f194d1210d638a06101a08289e85fa00f8f7f78a53cf147a87b2a7f0d27e64d7571f9d06a802e365c3430a017dc77eae36c88937db4a5179f57edc6119701652f3f1c6f194d1210d638a061",  # noqa: 501
+        "transaction": {
+            "chainId": "0x539",
+            "maxFeePerGas": "0x012a05f200",
+            "maxPriorityFeePerGas": "0x02",
+            "gas": "0x186a0",
+            "data": "0x616263646566",
+            "nonce": "0x22",
+            "to": "0x09616C3d61b3331fc4109a9E41a8BDB7d9776609",
+            "value": "0x5af3107a4000",
+            # "type": "0x4",
+            "accessList": (
+                {
+                    "address": "0x0000000000000000000000000000000000000001",
+                    "storageKeys": (
+                        "0x0100000000000000000000000000000000000000000000000000000000000000",  # noqa: E501
+                    ),
+                },
+            ),
+            "authorizations": (
+                (
+                    "0x539",
+                    "0x09616C3d61b3331fc4109a9E41a8BDB7d9776609",
+                    0,
+                    "0x1",
+                    "0x8289e85fa00f8f7f78a53cf147a87b2a7f0d27e64d7571f9d06a802e365c3430",
+                    "0x17dc77eae36c88937db4a5179f57edc6119701652f3f1c6f194d1210d638a061",
+                ),
+            ),
+            "v": "0x1",
+            "r": "0x8289e85fa00f8f7f78a53cf147a87b2a7f0d27e64d7571f9d06a802e365c3430",
+            "s": "0x17dc77eae36c88937db4a5179f57edc6119701652f3f1c6f194d1210d638a061",
+        },
+    },
 ]
 
 TEST_CASE_IDS = [
@@ -353,6 +391,8 @@ TEST_CASE_IDS = [
     "blob-no-access-list",
     "blob-int-values-and-access-list",
     "blob-no-explicit-type",
+    "set-code-with-access-list",
+    # "set-code-without-access-list"
 ]
 
 
