@@ -27,6 +27,7 @@ import rlp
 from rlp.sedes import (
     Binary,
     CountableList,
+    List as ListSedesClass,
     big_endian_int,
     binary,
 )
@@ -54,15 +55,16 @@ from eth_account._utils.validation import (
 )
 
 
-class Authorization(rlp.Serializable):  # type: ignore
-    fields = (
-        ("chainId", big_endian_int),
-        ("account", Binary.fixed_length(20, allow_empty=True)),
-        ("nonce", big_endian_int),
-        ("yParity", big_endian_int),
-        ("r", big_endian_int),
-        ("s", big_endian_int),
-    )
+authorizations_sede_type = ListSedesClass(
+    [
+        big_endian_int,
+        Binary.fixed_length(20, allow_empty=True),
+        big_endian_int,
+        big_endian_int,
+        big_endian_int,
+        big_endian_int,
+    ]
+)
 
 
 class SetCodeTransaction(_TypedTransactionImplementation):  # type: ignore
@@ -82,7 +84,7 @@ class SetCodeTransaction(_TypedTransactionImplementation):  # type: ignore
         ("value", big_endian_int),
         ("data", binary),
         ("accessList", access_list_sede_type),
-        ("authorizations", CountableList(Authorization)),
+        ("authorizations", CountableList(authorizations_sede_type)),
     )
 
     signature_fields = (
